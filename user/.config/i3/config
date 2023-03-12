@@ -55,10 +55,10 @@ default_orientation horizontal
 workspace_layout    default
 
 ## Window border colors.
-client.focused          $color_yellow      $color_background $color_yellow      $color_light-yellow $color_yellow
-client.unfocused        $color_light-black $color_background $color_light-black $color_light-black  $color_light-black
-client.focused_inactive $color_light-black $color_background $color_light-black $color_light-black  $color_light-black
-client.urgent           $color_red         $color_background $color_red         $color_light-red    $color_red
+client.focused          $color_yellow     $color_background $color_yellow     $color_light-yellow $color_yellow
+client.unfocused        $color_light-blue $color_background $color_light-blue $color_light-blue   $color_light-blue
+client.focused_inactive $color_light-blue $color_background $color_light-blue $color_light-blue   $color_light-blue
+client.urgent           $color_red        $color_background $color_red        $color_light-red    $color_red
 
 ## Shortcuts (i3).
 bindsym $mod+1 workspace $ws1

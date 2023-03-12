@@ -1,0 +1,18 @@
+## AUTHOR:      AISK11
+## LOCATION:    ~/.config/shellcheckrc (0644)
+## DESCRIPTION: Shellcheck tool configuration file.
+## SOURCES:     https://github.com/koalaman/shellcheck
+## - ARCH:      community/shellcheck
+
+## Enable optional checks by name as listed with "$(shellcheck --list-optional)".
+enable=add-default-case
+enable=avoid-nullary-conditions
+enable=check-extra-masked-returns
+enable=check-set-e-suppressed
+enable=check-unassigned-uppercase
+enable=deprecate-which
+enable=quote-safe-variables
+enable=require-variable-braces
+
+## Override shell detected from the shebang.
+shell=sh

@@ -1,0 +1,11 @@
+"" AUTHOR:      AISK11
+"" LOCATION:    ~/.bvirc (0644)
+"" DESCRIPTION: Bvi binary CLI text editor configuration file.
+"" SOURCES:     http://bvi.sourceforge.net/
+"" - ARCH:      blackarch/bvi
+
+"" Enable edit.
+set memmove
+
+"" Show status message bar at the bottom.
+set showmode

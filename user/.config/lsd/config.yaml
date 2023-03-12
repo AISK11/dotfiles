@@ -1,0 +1,76 @@
+## AUTHOR:      AISK11
+## LOCATION:    ~/.config/lsd/config.yaml (0644)
+## DESCRIPTION: LSD command configuration file.
+## SOURCES:     https://github.com/Peltoche/lsd
+## - ARCH:      community/lsd
+
+## Do not automatically configure "color", "sorting", "date" and "icons" options.
+classic: false
+
+## Item layout.
+layout: grid
+
+## Items that should be displayed.
+display: visible-only
+
+## Item sorting methods.
+sorting:
+  column:       name
+  reverse:      false
+  dir-grouping: first
+
+## File indicators (dir/, lnk@, exe*, sock=, fifo|).
+indicators: false
+
+## Do not dereference symlinks.
+dereference: false
+
+## Show where symlink leads to.
+no-symlink: false
+
+## Symlink arrow display.
+symlink-arrow: ⮞
+
+## Do not attach hyperlink to filename (do not make it clickable).
+hyperlink: never
+
+## Do not enable recursion.
+recursion:
+  enabled: false
+  #depth:   3
+
+## Color options.
+color:
+  when:  auto
+  theme: default
+
+## Icon options (may require "nerd-fonts" to install).
+icons:
+  when:      auto
+  theme:     fancy
+  separator: " "
+
+## Display block headers.
+header: true
+
+## Blocks to display when using "long" option.
+blocks:
+  - permission
+  - user
+  - group
+  - size
+  - date
+  - name
+
+## Block permission display format.
+permission: rwx
+
+## Block size display format.
+size: short
+
+## Do not calculate full directory size (takes too long and missing perms errors).
+total-size: false
+
+## Block date display format (ISO 8601: CCYY-MM-DDThh:mm:ss+ZZ).
+#date: '+%Y-%m-%dT%H:%M:%S%Z'
+date: '+%Y-%m-%d %H:%M:%S %Z'

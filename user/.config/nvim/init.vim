@@ -31,19 +31,36 @@ set statusline=File:\ \[%F\]\ (%Y)%=%R\ %M%=Position:\ [%l:%c]\ (%p%%)
 match ExtraWhitespace /\s\+$/
 
 "" Theme.
-if $TERM != 'linux'
-    let color_tui=209
-    exe 'highlight LineNr       cterm=bold         ctermfg=' . color_tui
-    exe 'highlight CursorLineNr cterm=bold,reverse ctermfg=' . color_tui
-    exe 'highlight StatusLine   cterm=bold         ctermfg=' . color_tui
-    exe 'highlight ColorColumn  cterm=none         ctermbg=' . color_tui
+if $COLORTERM == 'truecolor'
+    set termguicolors
 
-    let color_error=202
-    exe 'highlight ExtraWhiteSpace ctermbg=' . color_error
+    let color_tui='#F5CD7B'
+    exe 'highlight LineNr       gui=bold         guifg=' . color_tui
+    exe 'highlight CursorLineNr gui=bold,reverse guifg=' . color_tui
+    exe 'highlight StatusLine   gui=bold,reverse guifg=' . color_tui
+    exe 'highlight ColorColumn  gui=bold         guibg=' . color_tui
 
-    let color_bg=232
-    let color_fg=231
-    let color_line=234
-    exe 'highlight Normal     cterm=none ctermfg=' . color_fg . ' ctermbg=' . color_bg
-    exe 'highlight CursorLine cterm=none ctermbg=' . color_line
+    let color_bg='#282C34'
+    let color_fg='#ABB2BF'
+    let color_line='#383E4A'
+    exe 'highlight Normal     gui=none guibg=' . color_bg . ' guifg=' . color_fg
+    exe 'highlight CursorLine gui=none guibg=' . color_line
+    exe 'highlight Visual     gui=none guibg=' . color_line
+    exe 'highlight Search     gui=none guibg=' . color_tui ' guifg=' . color_bg
+    exe 'highlight CurSearch  gui=bold guibg=' . color_tui ' guifg=' . color_bg
+
+    let color_red='#E06C75'
+    exe 'highlight ExtraWhiteSpace gui=none guibg=' . color_red
+    exe 'highlight Statement       gui=none guifg=' . color_red
+
+    let color_comment='#676F7D'
+    exe 'highlight Comment gui=none guifg=' . color_comment
+
+    let color_string='#E5C07B'
+    let color_value='#C678DD'
+    exe 'highlight String gui=none guifg=' . color_string
+    exe 'highlight Number gui=none guifg=' . color_value
+
+    let color_type='#56B6C2'
+    exe 'highlight Type gui=none guifg=' . color_type
 endif

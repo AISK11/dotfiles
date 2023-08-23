@@ -6,10 +6,12 @@
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
 --------------------------------------------------------------------------------
--- Paq package manager.
-function install_paq()
-  local path = os.getenv("HOME") ..
-    "/.local/share/nvim/site/pack/paqs/start/paq-nvim"
+-- Path to package manager and packages.
+local nvim_data_path = os.getenv("HOME") .. "/.local/share/nvim"
+
+-- Paq package manager autoinstall.
+function paq_autoinstall()
+  local path = nvim_data_path .. "/site/pack/paqs/start/paq-nvim"
   local f = io.open(path, "r")
   if (f) then
     io.close(f)
@@ -18,16 +20,47 @@ function install_paq()
       path .. " > /dev/null 2>&1")
   end
 end
-install_paq()
+paq_autoinstall()
 
--- Custom Paq commands.
-vim.cmd("command! PS source | PaqSync | source")
-vim.cmd("command! PL PaqList")
-
--- Packages (use ":PS" command).
+-- Packages (use ":PaqSync" and ":source" commands to install packages).
 require "paq" {
-  { "savq/paq-nvim", opt = false }, -- Package manager.
+  { "savq/paq-nvim", opt = false },             -- Package manager.
+  { "loctvl842/monokai-pro.nvim", opt = false } -- Color scheme.
 }
+
+-- Internal functions.
+function paq_installed_packages()
+  local f = io.open(nvim_data_path .. "/paq-lock.json", "r")
+  if (f) then
+    local f_content = f:read("*all")
+    f:close()
+    local plugins = {}
+    for plugin in f_content:gmatch("\"([^\"]+)\":{") do
+      table.insert(plugins, plugin)
+    end
+    return table.concat(plugins, "\n")
+  end
+  return ""
+end
+local packages = paq_installed_packages()
+
+function is_package_installed(package)
+  return string.find(packages, package, 1, true) ~= nil
+end
+
+-- Package settings.
+if (is_package_installed("monokai-pro.nvim")) then
+  require("monokai-pro").setup({
+    filter = "pro"
+  })
+end
+
+-- Package usage.
+if (os.getenv("COLORTERM") == "truecolor") then
+  if (is_package_installed("monokai-pro.nvim")) then
+    vim.cmd("colorscheme monokai-pro")
+  end
+end
 
 --------------------------------------------------------------------------------
 --                                 CONFIGURATION                              --
@@ -53,23 +86,24 @@ vim.cmd("match ExtraTabOrSpace /\\s\\+$/")
 vim.cmd("highlight! link ExtraTabOrSpace ColorColumn")
 
 -- Text format.
+local tab_size = "2"
 vim.cmd("set fileformats=unix")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.cmd("set tabstop=" .. tab_size)
+vim.cmd("set softtabstop=" .. tab_size)
+vim.cmd("set shiftwidth=" .. tab_size)
 vim.cmd("set expandtab")
 vim.cmd("autocmd FileType make setlocal noexpandtab")
 
 --------------------------------------------------------------------------------
 --                                  COMMANDS                                  --
 --------------------------------------------------------------------------------
--- Text formatting.
-function format()
-  -- Replace tabs with spaces (if "expandtab" is set).
-  vim.cmd("silent retab")
-
+-- Basic code/text beautifying.
+function beautify()
   -- Remove carriage returns.
   vim.cmd("silent %s /\\r//eg")
+
+  -- Replace tabs with spaces (if "expandtab" is set).
+  vim.cmd("silent retab")
 
   -- Remove trailing spaces and tabs at the end of lines.
   vim.cmd("silent %s/\\s\\+$//e")
@@ -82,5 +116,4 @@ function format()
     vim.cmd("silent :1,/^./-1delete | silent nohl")
   end
 end
-
-vim.cmd("command! FORMAT lua format()")
+vim.cmd("command! FORMAT lua beautify()")

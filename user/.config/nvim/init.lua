@@ -65,8 +65,6 @@ vim.cmd("autocmd FileType make setlocal noexpandtab")
 --------------------------------------------------------------------------------
 -- Text formatting.
 function format()
-  local current_file = vim.fn.expand("%:p")
-
   -- Replace tabs with spaces (if "expandtab" is set).
   vim.cmd("silent retab")
 
@@ -80,10 +78,8 @@ function format()
   vim.cmd("silent %s/\\n\\+\\%$//e")
 
   -- Remove empty lines at the start of file.
-  local first_line = vim.fn.getline(1)
-  if (first_line == "") then
-    vim.cmd("silent :1,/^./-1delete")
-    vim.cmd("silent nohl")
+  if (vim.fn.getline(1) == "") then
+    vim.cmd("silent :1,/^./-1delete | silent nohl")
   end
 end
 

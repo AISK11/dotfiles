@@ -53,6 +53,7 @@ vim.cmd("match ExtraTabOrSpace /\\s\\+$/")
 vim.cmd("highlight! link ExtraTabOrSpace ColorColumn")
 
 -- Text format.
+vim.cmd("set fileformats=unix")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
@@ -62,6 +63,28 @@ vim.cmd("autocmd FileType make setlocal noexpandtab")
 --------------------------------------------------------------------------------
 --                                  COMMANDS                                  --
 --------------------------------------------------------------------------------
--- Replace tabs with spaces (if expandtab is set), remove trailing spaces and
--- empty lines at end.
-vim.cmd("command! FORMAT retab | %s/\\s\\+$//e | %s/\\n\\+\\%$//e")
+-- Text formatting.
+function format()
+  local current_file = vim.fn.expand("%:p")
+
+  -- Replace tabs with spaces (if "expandtab" is set).
+  vim.cmd("silent retab")
+
+  -- Remove carriage returns.
+  vim.cmd("silent %s /\\r//eg")
+
+  -- Remove trailing spaces and tabs at the end of lines.
+  vim.cmd("silent %s/\\s\\+$//e")
+
+  -- Remove empty lines at the end of file.
+  vim.cmd("silent %s/\\n\\+\\%$//e")
+
+  -- Remove empty lines at the start of file.
+  local first_line = vim.fn.getline(1)
+  if (first_line == "") then
+    vim.cmd("silent :1,/^./-1delete")
+    vim.cmd("silent nohl")
+  end
+end
+
+vim.cmd("command! FORMAT lua format()")

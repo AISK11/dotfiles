@@ -4,60 +4,74 @@
 -- SOURCE:        https://github.com/neovim/neovim
 
 --------------------------------------------------------------------------------
+--                                  SETTINGS                                  --
+--------------------------------------------------------------------------------
+-- Choose if packages should be used (requires internet on first launch).
+local use_packages = true
+
+--------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
 --------------------------------------------------------------------------------
--- Path to package manager and packages.
-local nvim_data_path = os.getenv("HOME") .. "/.local/share/nvim"
+if (use_packages) then
+  local nvim_data_path     = os.getenv("HOME") .. "/.local/share/nvim"
+  local is_fresh_install   = false
+  local installed_packages = ""
 
--- Paq package manager autoinstall.
-function paq_autoinstall()
-  local path = nvim_data_path .. "/site/pack/paqs/start/paq-nvim"
-  local f = io.open(path, "r")
-  if (f) then
-    io.close(f)
-  else
-    os.execute("git clone --depth=1 https://github.com/savq/paq-nvim.git " ..
-      path .. " > /dev/null 2>&1")
-  end
-end
-paq_autoinstall()
-
--- Packages (use ":PaqSync" and ":source" commands to install packages).
-require "paq" {
-  { "savq/paq-nvim", opt = false },             -- Package manager.
-  { "loctvl842/monokai-pro.nvim", opt = false } -- Color scheme.
-}
-
--- Internal functions.
-function paq_installed_packages()
-  local f = io.open(nvim_data_path .. "/paq-lock.json", "r")
-  if (f) then
-    local f_content = f:read("*all")
-    f:close()
-    local plugins = {}
-    for plugin in f_content:gmatch("\"([^\"]+)\":{") do
-      table.insert(plugins, plugin)
+  -- Paq package manager autoinstall.
+  function autoinstall_paq()
+    local path = nvim_data_path .. "/site/pack/paqs/start/paq-nvim"
+    local f    = io.open(path, "r")
+    if (f) then
+      io.close(f)
+    else
+      os.execute("git clone --depth=1 https://github.com/savq/paq-nvim.git " ..
+        path .. " > /dev/null 2>&1")
+        is_fresh_install = true
     end
-    return table.concat(plugins, "\n")
   end
-  return ""
-end
-local packages = paq_installed_packages()
+  autoinstall_paq()
 
-function is_package_installed(package)
-  return string.find(packages, package, 1, true) ~= nil
-end
+  -- Paq installed packages (required for ":Paq*" commands).
+  require "paq" {
+    { "savq/paq-nvim", opt = false },             -- Package manager.
+    { "loctvl842/monokai-pro.nvim", opt = false } -- Color scheme.
+  }
 
--- Package settings.
-if (is_package_installed("monokai-pro.nvim")) then
-  require("monokai-pro").setup({
-    filter = "pro"
-  })
-end
+  -- Check if package is installed.
+  function get_installed_packages()
+    local f = io.open(nvim_data_path .. "/paq-lock.json", "r")
+    if (f) then
+      local f_content = f:read("*all")
+      f:close()
+      local plugins = {}
+      for plugin in f_content:gmatch("\"([^\"]+)\":{") do
+        table.insert(plugins, plugin)
+      end
+      return table.concat(plugins, "\n")
+    end
+    return ""
+  end
 
--- Package usage.
-if (os.getenv("COLORTERM") == "truecolor") then
+  function is_package_installed(package)
+    return string.find(installed_packages, package, 1, true) ~= nil
+  end
+
+  -- Paq installed packages autoinstall.
+  function autoinstall_packages()
+    vim.cmd("PaqSync")
+    --vim.cmd("q")
+  end
+  if (is_fresh_install) then
+    autoinstall_packages()
+  else
+    installed_packages = get_installed_packages()
+  end
+
+  -- Package settings and usage.
   if (is_package_installed("monokai-pro.nvim")) then
+    require("monokai-pro").setup({
+      filter = "pro"
+    })
     vim.cmd("colorscheme monokai-pro")
   end
 end
@@ -116,4 +130,4 @@ function beautify()
     vim.cmd("silent :1,/^./-1delete | silent nohl")
   end
 end
-vim.cmd("command! FORMAT lua beautify()")
+vim.cmd("command! BEAUTIFY lua beautify()")

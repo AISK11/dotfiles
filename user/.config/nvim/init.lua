@@ -12,7 +12,7 @@ local use_packages = true
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
 --------------------------------------------------------------------------------
-if (use_packages) then
+if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   local nvim_data_path     = os.getenv("HOME") .. "/.local/share/nvim"
   local is_fresh_install   = false
   local installed_packages = ""
@@ -59,7 +59,6 @@ if (use_packages) then
   -- Paq installed packages autoinstall.
   function autoinstall_packages()
     vim.cmd("PaqSync")
-    --vim.cmd("q")
   end
   if (is_fresh_install) then
     autoinstall_packages()

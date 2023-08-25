@@ -35,6 +35,7 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   require "paq" {
     { "savq/paq-nvim", opt = false },              -- Package manager.
     { "loctvl842/monokai-pro.nvim", opt = false }, -- Color scheme.
+    { "mhinz/vim-signify", opt = false },          -- VCS decorations.
   }
 
   -- Check if package is installed.
@@ -72,6 +73,11 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
       filter = "pro"
     })
     vim.cmd("colorscheme monokai-pro")
+  end
+  if (is_package_installed("vim-signify")) then
+    vim.cmd("set updatetime=100")
+    vim.cmd("let g:signify_line_highlight=0")
+    vim.cmd("let g:signify_number_highlight=1")
   end
 end
 

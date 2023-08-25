@@ -7,7 +7,7 @@
 --                                  SETTINGS                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
-local use_packages = true
+--local use_packages = true
 
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
@@ -33,8 +33,8 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
 
   -- Paq installed packages (required for ":Paq*" commands).
   require "paq" {
-    { "savq/paq-nvim", opt = false },             -- Package manager.
-    { "loctvl842/monokai-pro.nvim", opt = false } -- Color scheme.
+    { "savq/paq-nvim", opt = false },              -- Package manager.
+    { "loctvl842/monokai-pro.nvim", opt = false }, -- Color scheme.
   }
 
   -- Check if package is installed.

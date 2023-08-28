@@ -36,6 +36,7 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
     { "savq/paq-nvim", opt = false },                   -- Package manager.
     { "loctvl842/monokai-pro.nvim", opt = false },      -- Color scheme.
     { "nvim-treesitter/nvim-treesitter", opt = false }, -- Syntax highlighting.
+    { "norcalli/nvim-colorizer.lua", opt = false },     -- Colorizer.
   }
 
   -- Check if package is installed.
@@ -74,7 +75,6 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
     })
     vim.cmd("colorscheme monokai-pro")
   end
-
   if (is_package_installed("nvim-treesitter")) then
     require("nvim-treesitter.configs").setup({
       ensure_installed = { "c", "lua", "query" },
@@ -82,6 +82,9 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
         enable = true,
       },
     })
+  end
+  if (is_package_installed("nvim-colorizer.lua")) then
+    require("colorizer").setup()
   end
 end
 

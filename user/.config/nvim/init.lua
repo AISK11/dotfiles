@@ -7,7 +7,7 @@
 --                                  SETTINGS                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
---local use_packages = true
+local use_packages = true
 
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
@@ -33,9 +33,9 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
 
   -- Paq installed packages (required for ":Paq*" commands).
   require "paq" {
-    { "savq/paq-nvim", opt = false },              -- Package manager.
-    { "loctvl842/monokai-pro.nvim", opt = false }, -- Color scheme.
-    { "mhinz/vim-signify", opt = false },          -- VCS decorations.
+    { "savq/paq-nvim", opt = false },                   -- Package manager.
+    { "loctvl842/monokai-pro.nvim", opt = false },      -- Color scheme.
+    { "nvim-treesitter/nvim-treesitter", opt = false }, -- Syntax highlighting.
   }
 
   -- Check if package is installed.
@@ -70,14 +70,18 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   -- Package settings and usage.
   if (is_package_installed("monokai-pro.nvim")) then
     require("monokai-pro").setup({
-      filter = "pro"
+      filter = "pro",
     })
     vim.cmd("colorscheme monokai-pro")
   end
-  if (is_package_installed("vim-signify")) then
-    vim.cmd("set updatetime=100")
-    vim.cmd("let g:signify_line_highlight=0")
-    vim.cmd("let g:signify_number_highlight=1")
+
+  if (is_package_installed("nvim-treesitter")) then
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = { "c", "lua", "query" },
+      highlight = {
+        enable = true,
+      },
+    })
   end
 end
 

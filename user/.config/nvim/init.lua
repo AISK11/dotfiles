@@ -33,10 +33,11 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
 
   -- Paq installed packages (required for ":Paq*" commands).
   require "paq" {
-    { "savq/paq-nvim", opt = false },                   -- Package manager.
-    { "loctvl842/monokai-pro.nvim", opt = false },      -- Color scheme.
-    { "nvim-treesitter/nvim-treesitter", opt = false }, -- Syntax highlighting.
-    { "norcalli/nvim-colorizer.lua", opt = false },     -- Colorizer.
+    { "savq/paq-nvim", opt = false },                       -- Package manager.
+    { "loctvl842/monokai-pro.nvim", opt = false },          -- Color scheme.
+    { "nvim-treesitter/nvim-treesitter", opt = false },     -- Syntax.
+    { "norcalli/nvim-colorizer.lua", opt = false },         -- Colorizer.
+    { "lukas-reineke/indent-blankline.nvim", opt = false }, -- Indentation.
   }
 
   -- Check if package is installed.
@@ -85,6 +86,11 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   end
   if (is_package_installed("nvim-colorizer.lua")) then
     require("colorizer").setup()
+  end
+  if (is_package_installed("indent-blankline.nvim")) then
+    require("indent_blankline").setup({
+	    show_current_context = true,
+    })
   end
 end
 

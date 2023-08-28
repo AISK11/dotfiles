@@ -7,7 +7,7 @@
 --                                  SETTINGS                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
-local use_packages = true
+--local use_packages = true
 
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --

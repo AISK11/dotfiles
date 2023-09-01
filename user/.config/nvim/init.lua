@@ -37,7 +37,6 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
     { "loctvl842/monokai-pro.nvim", opt = false },          -- Color scheme.
     { "nvim-treesitter/nvim-treesitter", opt = false },     -- Syntax.
     { "norcalli/nvim-colorizer.lua", opt = false },         -- Colorizer.
-    { "lukas-reineke/indent-blankline.nvim", opt = false }, -- Indentation.
   }
 
   -- Check if package is installed.
@@ -113,7 +112,7 @@ vim.cmd("set guicursor=n-sm:block,i-c-ci:ver50,v-r-cr:hor50")
 vim.cmd("set statusline=File:\\ \\[%F\\]\\ (%Y)%=%R\\ %M%=Position:\\ [%l:%c]\\ (%p%%)")
 vim.cmd("set colorcolumn=81")
 vim.cmd("set list")
-vim.cmd("set listchars=tab:▸·")
+vim.cmd("set listchars=tab:→·")
 vim.cmd("match ExtraTabOrSpace /\\s\\+$/")
 vim.cmd("highlight! link ExtraTabOrSpace ColorColumn")
 

@@ -77,7 +77,7 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   end
   if (is_package_installed("nvim-treesitter")) then
     require("nvim-treesitter.configs").setup({
-      ensure_installed = { "c", "lua", "query" },
+      ensure_installed = { "c", "lua", "query", "go" },
       highlight = {
         enable = true,
       },
@@ -117,7 +117,7 @@ vim.cmd("match ExtraTabOrSpace /\\s\\+$/")
 vim.cmd("highlight! link ExtraTabOrSpace ColorColumn")
 
 -- Text format.
-local tab_size = "2"
+local tab_size = "4"
 vim.cmd("set fileformats=unix")
 vim.cmd("set tabstop=" .. tab_size)
 vim.cmd("set softtabstop=" .. tab_size)

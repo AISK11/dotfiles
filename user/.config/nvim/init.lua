@@ -7,7 +7,7 @@
 --                                  SETTINGS                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
---local use_packages = true
+local use_packages = true
 
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
@@ -77,7 +77,7 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   end
   if (is_package_installed("nvim-treesitter")) then
     require("nvim-treesitter.configs").setup({
-      ensure_installed = { "c", "lua", "query", "go" },
+      ensure_installed = { "c", "go", "lua", "perl", "query" },
       highlight = {
         enable = true,
       },

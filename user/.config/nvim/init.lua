@@ -7,7 +7,7 @@
 --                                  SETTINGS                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
-local use_packages = true
+--local use_packages = true
 
 --------------------------------------------------------------------------------
 --                                  PACKAGES                                  --
@@ -77,7 +77,7 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   end
   if (is_package_installed("nvim-treesitter")) then
     require("nvim-treesitter.configs").setup({
-      ensure_installed = { "c", "go", "lua", "perl", "query" },
+      ensure_installed = { "c", "go", "lua", "perl", "regex", "query" },
       highlight = {
         enable = true,
       },
@@ -124,6 +124,9 @@ vim.cmd("set softtabstop=" .. tab_size)
 vim.cmd("set shiftwidth=" .. tab_size)
 vim.cmd("set expandtab")
 vim.cmd("autocmd FileType make setlocal noexpandtab")
+
+-- Syntax highlighting for less-known formats.
+vim.cmd("autocmd BufNewFile,BufRead *.hta setfiletype html")
 
 --------------------------------------------------------------------------------
 --                                  COMMANDS                                  --

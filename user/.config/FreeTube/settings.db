@@ -1,0 +1,14 @@
+{"_id":"baseTheme","value":"catppuccinMocha"}
+{"_id":"mainColor","value":"CatppuccinMochaYellow"}
+{"_id":"secColor","value":"CatppuccinMochaMauve"}
+{"_id":"expandSideBar","value":false}
+{"_id":"hideLabelsSideBar","value":true}
+{"_id":"hideTrendingVideos","value":true}
+{"_id":"hidePopularVideos","value":true}
+
+{"_id":"autoplayVideos","value":true}
+{"_id":"autoplayPlaylists","value":true}
+{"_id":"playNextVideo","value":true}
+{"_id":"displayVideoPlayButton","value":true}
+{"_id":"defaultQuality","value":"1080"}
+{"_id":"commentAutoLoadEnabled","value":true}

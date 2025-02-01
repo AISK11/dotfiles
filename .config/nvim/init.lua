@@ -40,7 +40,7 @@ vim.cmd("set smartindent")
 
 -- Replace tabs with spaces (to insert tab press Shift+Tab or Ctrl+V+Tab).
 vim.cmd("set expandtab")
-vim.api.nvim_set_keymap('i', '<S-Tab>', '<C-V><Tab>', {noremap = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", {noremap = true})
 
 -- Tab size.
 local tab_size = "4"
@@ -50,7 +50,7 @@ vim.cmd("set shiftwidth=" .. tab_size)
 
 -- Specific filetype settings.
 vim.cmd("autocmd FileType make setlocal noexpandtab")
-vim.cmd("autocmd FileType html,css,javascript,jsonc,haskell set tabstop=2 softtabstop=2 shiftwidth=2")
+vim.cmd("autocmd FileType html,css,javascript,jsonc,lua,haskell set tabstop=2 softtabstop=2 shiftwidth=2")
 
 ----------------------------------------
 --                IDE                 --
@@ -66,7 +66,8 @@ vim.cmd("set statusline=File:\\ \\[%F\\]\\ (%Y)%=%R\\ %M%=Position:\\ [%l:%c]\\ 
 vim.cmd("set number")
 
 -- Scroll from middle.
-vim.cmd("set scrolloff=999")
+--vim.cmd("set scrolloff=999")
+vim.cmd("set scrolloff=4")
 
 -- Highlighting.
 vim.cmd("set colorcolumn=81")
@@ -103,3 +104,51 @@ function beautify()
   end
 end
 vim.cmd("command! BEAUTIFY lua beautify()")
+
+--------------------------------------------------------------------------------
+--                                  PACKAGES                                  --
+--------------------------------------------------------------------------------
+-- Choose if packages should be used (requires internet on first launch).
+-- 1. On first open error will be shown, restart nvim.
+-- 2. On second startup it type ':PaqSyc' command and restart nvim.
+local use_packages = false
+
+if (use_packages and os.getenv("COLORTERM") == "truecolor") then
+  -- Install Paq if necessary.
+  local paq_path = os.getenv("HOME") .. "/.local/share/nvim/site/pack/paqs/start/paq-nvim"
+  f = io.open(paq_path .. "/lua/paq.lua", "r")
+  if (f) then
+    io.close(f)
+  else
+    os.execute("git clone --depth=1 https://github.com/savq/paq-nvim.git " ..
+      paq_path .. " > /dev/null 2>&1")
+    fresh_install = true
+  end
+
+  -- Paq installed packages (required for ":PaqSync" commands).
+  require "paq" {
+    { "savq/paq-nvim", opt = false },                   -- Package manager.
+    { "loctvl842/monokai-pro.nvim", opt = false },      -- Color scheme.
+    --{ "nvim-treesitter/nvim-treesitter", opt = false }, -- Syntax.
+    { "norcalli/nvim-colorizer.lua", opt = false },     -- Colorizer.
+    { "mhinz/vim-signify", opt = false },               -- Git changes.
+  }
+
+  ---- Package settings.
+  -- monokai-pro.nvim
+  require("monokai-pro").setup({
+    filter = "pro",
+  })
+  vim.cmd("colorscheme monokai-pro")
+
+  -- nvim-treesitter/nvim-treesitter
+  --require("nvim-treesitter.configs").setup({
+    --ensure_installed = { "c", "lua", "perl", "regex", "query" },
+    --highlight = {
+      --enable = true,
+    --},
+  --})
+
+  -- norcalli/nvim-colorizer.lua
+  require("colorizer").setup()
+end

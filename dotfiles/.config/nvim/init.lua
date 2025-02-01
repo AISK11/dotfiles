@@ -105,8 +105,7 @@ vim.cmd("command! BEAUTIFY lua beautify()")
 --                                  PACKAGES                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
-local use_packages = false
-
+local use_packages = true
 if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   -- Packages.
   local packages = {

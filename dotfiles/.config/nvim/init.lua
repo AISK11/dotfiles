@@ -105,37 +105,40 @@ vim.cmd("command! BEAUTIFY lua beautify()")
 --                                  PACKAGES                                  --
 --------------------------------------------------------------------------------
 -- Choose if packages should be used (requires internet on first launch).
--- 1. On first open error will be shown, restart nvim.
--- 2. On second startup it type ':PaqSyc' command and restart nvim.
 local use_packages = false
 
 if (use_packages and os.getenv("COLORTERM") == "truecolor") then
+  -- Packages.
+  local packages = {
+    "savq/paq-nvim",               -- Package manager.
+    "catppuccin/nvim",             -- Color scheme.
+    "norcalli/nvim-colorizer.lua", -- Colorizer.
+    "lewis6991/gitsigns.nvim",     -- Git changes.
+  }
+
   -- Install Paq if necessary.
   local paq_path = os.getenv("HOME") .. "/.local/share/nvim/site/pack/paqs/start/paq-nvim"
   f = io.open(paq_path .. "/lua/paq.lua", "r")
   if (f) then
     io.close(f)
   else
-    os.execute("git clone --depth=1 https://github.com/savq/paq-nvim.git " ..
-      paq_path .. " > /dev/null 2>&1")
-    fresh_install = true
+    os.execute("git clone --depth=1 https://github.com/savq/paq-nvim.git " .. paq_path .. " > /dev/null 2>&1")
+    vim.cmd("packadd paq-nvim")
+    require("paq")(packages)
+    require("paq").install()
+    vim.cmd("autocmd User PaqDoneInstall lua vim.cmd('source ' .. vim.fn.stdpath('config') .. '/init.lua')")
   end
 
-  -- Paq installed packages (required for ":PaqSync" commands).
-  require "paq" {
-    { "savq/paq-nvim", opt = false },               -- Package manager.
-    { "catppuccin/nvim", opt = false },             -- Color scheme.
-    { "norcalli/nvim-colorizer.lua", opt = false }, -- Colorizer.
-    { "lewis6991/gitsigns.nvim", opt = false },     -- Git changes.
-  }
+  -- Paq installed packages (required for ":Paq*" commands).
+  require("paq")(packages)
 
   ---- Package settings.
   -- "catppuccin/nvim"
   vim.cmd("colorscheme catppuccin-mocha")
 
-  -- "lewis6991/gitsigns.nvim"
-  require("gitsigns").setup()
-
   -- norcalli/nvim-colorizer.lua
   require("colorizer").setup()
+
+  -- "lewis6991/gitsigns.nvim"
+  require("gitsigns").setup()
 end

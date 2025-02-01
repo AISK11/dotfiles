@@ -20,7 +20,7 @@ vim.keymap.set("v", "<C-S-c>", "y")
 vim.cmd("xnoremap <expr> P 'Pgv\"'.v:register.'y`>'")
 vim.cmd("xnoremap <expr> p 'pgv\"'.v:register.'y`>'")
 
--- Do not show Right click menu (still works on multiple clicks).
+-- Do not show Right click menu (still works on multiple-click).
 vim.keymap.set("n", "<RightMouse>", "<NOP>")
 vim.keymap.set("v", "<RightMouse>", "<NOP>")
 vim.keymap.set("i", "<RightMouse>", "<NOP>")

@@ -128,26 +128,17 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
   -- Paq installed packages (required for ":PaqSync" commands).
   require "paq" {
     { "savq/paq-nvim", opt = false },                   -- Package manager.
-    { "loctvl842/monokai-pro.nvim", opt = false },      -- Color scheme.
-    --{ "nvim-treesitter/nvim-treesitter", opt = false }, -- Syntax.
+    { "catppuccin/nvim", opt = false },                 -- Color scheme.
     { "norcalli/nvim-colorizer.lua", opt = false },     -- Colorizer.
-    { "mhinz/vim-signify", opt = false },               -- Git changes.
+    { "lewis6991/gitsigns.nvim", opt = false },         -- Git changes.
   }
 
   ---- Package settings.
-  -- monokai-pro.nvim
-  require("monokai-pro").setup({
-    filter = "pro",
-  })
-  vim.cmd("colorscheme monokai-pro")
+  -- "catppuccin/nvim"
+  vim.cmd("colorscheme catppuccin-mocha")
 
-  -- nvim-treesitter/nvim-treesitter
-  --require("nvim-treesitter.configs").setup({
-    --ensure_installed = { "c", "lua", "perl", "regex", "query" },
-    --highlight = {
-      --enable = true,
-    --},
-  --})
+  -- "lewis6991/gitsigns.nvim"
+  require("gitsigns").setup()
 
   -- norcalli/nvim-colorizer.lua
   require("colorizer").setup()

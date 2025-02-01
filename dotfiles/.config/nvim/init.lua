@@ -16,22 +16,19 @@ vim.cmd("set clipboard=unnamedplus")
 vim.keymap.set("v", "<C-c>", "y")
 vim.keymap.set("v", "<C-S-c>", "y")
 
--- Keep copied/cut text in memory after pasting for multiple pasting.
+-- Keep copied/cut text in memory after pasting - allow multiple pasting.
 vim.cmd("xnoremap <expr> P 'Pgv\"'.v:register.'y`>'")
 vim.cmd("xnoremap <expr> p 'pgv\"'.v:register.'y`>'")
 
--- Do not show Right click menu (still works on triple click).
+-- Do not show Right click menu (still works on multiple clicks).
 vim.keymap.set("n", "<RightMouse>", "<NOP>")
 vim.keymap.set("v", "<RightMouse>", "<NOP>")
 vim.keymap.set("i", "<RightMouse>", "<NOP>")
-vim.keymap.set("n", "<2-RightMouse>", "<NOP>")
-vim.keymap.set("v", "<2-RightMouse>", "<NOP>")
-vim.keymap.set("i", "<2-RightMouse>", "<NOP>")
 
 ----------------------------------------
 --            TEXT FORMAT             --
 ----------------------------------------
--- Use <NL> instead of <CR><NL>.
+-- Use <LF> instead of <CR><LF>.
 vim.cmd("set fileformats=unix")
 
 -- Auto indentation.
@@ -43,14 +40,13 @@ vim.cmd("set expandtab")
 vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", {noremap = true})
 
 -- Tab size.
-local tab_size = "4"
-vim.cmd("set tabstop=" .. tab_size)
-vim.cmd("set softtabstop=" .. tab_size)
-vim.cmd("set shiftwidth=" .. tab_size)
+vim.cmd("set tabstop=4 softtabstop=4 shiftwidth=4")
 
 -- Specific filetype settings.
-vim.cmd("autocmd FileType make setlocal noexpandtab")
-vim.cmd("autocmd FileType html,css,javascript,jsonc,lua,haskell set tabstop=2 softtabstop=2 shiftwidth=2")
+local langs_tab_sensitive = "make"
+vim.cmd("autocmd FileType " .. langs_tab_sensitive .. " setlocal noexpandtab")
+local langs_tab_2 = "html,css,javascript,jsonc,lua,haskell"
+vim.cmd("autocmd FileType " .. langs_tab_2 .. " set tabstop=2 softtabstop=2 shiftwidth=2")
 
 ----------------------------------------
 --                IDE                 --
@@ -66,7 +62,6 @@ vim.cmd("set statusline=File:\\ \\[%F\\]\\ (%Y)%=%R\\ %M%=Position:\\ [%l:%c]\\ 
 vim.cmd("set number")
 
 -- Scroll from middle.
---vim.cmd("set scrolloff=999")
 vim.cmd("set scrolloff=4")
 
 -- Highlighting.
@@ -79,7 +74,8 @@ vim.cmd("set list")
 vim.cmd("set listchars=tab:→·")
 
 -- Syntax highlighting for less-known formats.
-vim.cmd("autocmd BufNewFile,BufRead *.hta,*.astro setfiletype html")
+local langs_syntax_html = "*.astro,*.hta"
+vim.cmd("autocmd BufNewFile,BufRead " .. langs_syntax_html .. " setfiletype html")
 
 --------------------------------------------------------------------------------
 --                                  COMMANDS                                  --
@@ -127,10 +123,10 @@ if (use_packages and os.getenv("COLORTERM") == "truecolor") then
 
   -- Paq installed packages (required for ":PaqSync" commands).
   require "paq" {
-    { "savq/paq-nvim", opt = false },                   -- Package manager.
-    { "catppuccin/nvim", opt = false },                 -- Color scheme.
-    { "norcalli/nvim-colorizer.lua", opt = false },     -- Colorizer.
-    { "lewis6991/gitsigns.nvim", opt = false },         -- Git changes.
+    { "savq/paq-nvim", opt = false },               -- Package manager.
+    { "catppuccin/nvim", opt = false },             -- Color scheme.
+    { "norcalli/nvim-colorizer.lua", opt = false }, -- Colorizer.
+    { "lewis6991/gitsigns.nvim", opt = false },     -- Git changes.
   }
 
   ---- Package settings.

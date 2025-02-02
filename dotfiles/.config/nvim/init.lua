@@ -37,7 +37,7 @@ vim.cmd("set smartindent")
 
 -- Replace tabs with spaces (to insert tab press Shift+Tab or Ctrl+V+Tab).
 vim.cmd("set expandtab")
-vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", {noremap = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", { noremap = true })
 
 -- Tab size.
 vim.cmd("set tabstop=4 softtabstop=4 shiftwidth=4")
@@ -51,6 +51,10 @@ vim.cmd("autocmd FileType " .. langs_tab_2 .. " set tabstop=2 softtabstop=2 shif
 ----------------------------------------
 --                IDE                 --
 ----------------------------------------
+-- Case insensitive search if lowercase search.
+vim.cmd("set ignorecase")
+vim.cmd("set smartcase")
+
 -- Cursor.
 vim.cmd("set guicursor=n-sm:block,i-c-ci:ver50,v-r-cr:hor50")
 vim.cmd("set cursorline")
@@ -76,6 +80,12 @@ vim.cmd("set listchars=tab:→·")
 -- Syntax highlighting for less-known formats.
 local langs_syntax_html = "*.astro,*.hta"
 vim.cmd("autocmd BufNewFile,BufRead " .. langs_syntax_html .. " setfiletype html")
+
+--------------------------------------------------------------------------------
+--                                 SHORTCUTS                                  --
+--------------------------------------------------------------------------------
+-- Repalce text (Ctrl+H).
+vim.api.nvim_set_keymap('n', '<C-h>', ':%s/', { noremap = true })
 
 --------------------------------------------------------------------------------
 --                                  COMMANDS                                  --

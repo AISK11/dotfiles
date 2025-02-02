@@ -37,7 +37,7 @@ vim.cmd("set smartindent")
 
 -- Replace tabs with spaces (to insert tab press Shift+Tab or Ctrl+V+Tab).
 vim.cmd("set expandtab")
-vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", { noremap = true, silent = true })
 
 -- Tab size.
 vim.cmd("set tabstop=4 softtabstop=4 shiftwidth=4")
@@ -85,7 +85,20 @@ vim.cmd("autocmd BufNewFile,BufRead " .. langs_syntax_html .. " setfiletype html
 --                                 SHORTCUTS                                  --
 --------------------------------------------------------------------------------
 -- Replace text (Ctrl+H).
-vim.api.nvim_set_keymap('n', '<C-h>', ':%s/', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-h>', ':%s/', { noremap = true, silent = true })
+
+-- Find text (Ctrl+F).
+vim.api.nvim_set_keymap('n', '<C-f>', '/', { noremap = true, silent = true })
+
+-- Save file (Ctrl+S).
+vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-s>', '<C-c>:w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-s>', '<C-o>:w<CR>', { noremap = true, silent = true })
+
+-- Quit file (Ctrl+Q).
+vim.api.nvim_set_keymap('n', '<C-q>', ':q<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-q>', '<C-c>:q<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-q>', '<C-o>:q<CR>', { noremap = true, silent = true })
 
 --------------------------------------------------------------------------------
 --                                  COMMANDS                                  --

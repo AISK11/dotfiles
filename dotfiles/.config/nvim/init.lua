@@ -84,7 +84,7 @@ vim.cmd("autocmd BufNewFile,BufRead " .. langs_syntax_html .. " setfiletype html
 --------------------------------------------------------------------------------
 --                                 SHORTCUTS                                  --
 --------------------------------------------------------------------------------
--- Repalce text (Ctrl+H).
+-- Replace text (Ctrl+H).
 vim.api.nvim_set_keymap('n', '<C-h>', ':%s/', { noremap = true })
 
 --------------------------------------------------------------------------------

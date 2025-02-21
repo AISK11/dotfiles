@@ -1,0 +1,11 @@
+## Do not check sourced scripts.
+external-sources=false
+
+## Use POSIX-compliant shell as reference.
+shell=sh
+
+## Enable all optional warnings.
+enable=all
+
+## Disable unwanted warnings.
+disable=SC1091,SC2016,SC2034,SC2154,SC2312

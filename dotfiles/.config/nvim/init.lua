@@ -43,8 +43,10 @@ vim.api.nvim_set_keymap("i", "<S-Tab>", "<C-V><Tab>", { noremap = true, silent =
 vim.cmd("set tabstop=4 softtabstop=4 shiftwidth=4")
 
 -- Specific filetype settings.
-local langs_tab_sensitive = "make"
-vim.cmd("autocmd FileType " .. langs_tab_sensitive .. " setlocal noexpandtab")
+local langs_tab_sensitive = {"make", "markdown"}
+for _, lang in ipairs(langs_tab_sensitive) do
+    vim.cmd("autocmd FileType " .. lang .. " setlocal noexpandtab")
+end
 local langs_tab_2 = "html,css,javascript,jsonc,lua,haskell"
 vim.cmd("autocmd FileType " .. langs_tab_2 .. " set tabstop=2 softtabstop=2 shiftwidth=2")
 
@@ -84,6 +86,10 @@ vim.cmd("autocmd BufNewFile,BufRead " .. langs_syntax_html .. " setfiletype html
 --------------------------------------------------------------------------------
 --                                 SHORTCUTS                                  --
 --------------------------------------------------------------------------------
+-- Indend text (select text -> Tab || Shift+Tab).
+vim.api.nvim_set_keymap('v', '<Tab>', '>gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true })
+
 -- Replace text (Ctrl+H).
 vim.api.nvim_set_keymap('n', '<C-h>', ':%s/', { noremap = true, silent = true })
 
@@ -109,7 +115,7 @@ function beautify()
   vim.cmd("silent %s /\\r//eg")
 
   -- Replace tabs with spaces (if "expandtab" is set).
-  vim.cmd("silent retab")
+  --vim.cmd("silent retab")
 
   -- Remove trailing spaces and tabs at the end of lines.
   vim.cmd("silent %s/\\s\\+$//e")

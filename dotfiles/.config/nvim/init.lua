@@ -90,6 +90,9 @@ vim.cmd("autocmd BufNewFile,BufRead " .. langs_syntax_html .. " setfiletype html
 vim.api.nvim_set_keymap('v', '<Tab>', '>gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true })
 
+-- Select all text (Ctrl+A).
+vim.api.nvim_set_keymap('n', '<C-a>', 'ggVG', { noremap = true, silent = true })
+
 -- Replace text (Ctrl+H).
 vim.api.nvim_set_keymap('n', '<C-h>', ':%s/', { noremap = true, silent = true })
 
